@@ -19,6 +19,10 @@ export class Collection<T extends Doc> {
   get(key: string) {
     return this.kv.get(this.name ? [this.name, key] : [key]);
   }
+
+  list(options?: Deno.KvListOptions) {
+    return this.kv.list({ prefix: this.name ? [this.name] : [] }, options);
+  }
 }
 
 type Doc = Record<string | number | symbol, unknown>;
@@ -34,4 +38,3 @@ type TableInit<T> =
   }
   & (T extends { id: Deno.KvKeyPart } ? { primaryKey?: AllowedKeys<T> }
     : { primaryKey: AllowedKeys<T> });
-    

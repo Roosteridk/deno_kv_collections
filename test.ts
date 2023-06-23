@@ -14,4 +14,6 @@ users.set({
   age: 1,
 });
 
-console.log(await users.get("asdf"));
+for await (const { key, value } of users.list()) {
+  console.log(key, value);
+}
